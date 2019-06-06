@@ -2,10 +2,12 @@
 //
 
 #include <iostream>
+#include <stdlib.h>
 
 int main()
 {
     std::cout << "Hello World!\n"; 
+	printf("SAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAshen'ka :)");
 }
 
 // Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
