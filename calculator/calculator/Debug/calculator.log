@@ -1,2 +1,3 @@
 ﻿  calculator.cpp
-  calculator.vcxproj -> D:\git\calculator\calculator\Debug\calculator.exe
+  LINK : не найден или не выполнена сборка C:\GitTest\calculator\calculator\Debug\calculator.exe при последней инкрементной компоновке; выполняется полная компоновка
+  calculator.vcxproj -> C:\GitTest\calculator\calculator\Debug\calculator.exe
