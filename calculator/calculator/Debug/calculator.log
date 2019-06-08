@@ -1,3 +1,3 @@
 ﻿  calculator.cpp
-  LINK : не найден или не выполнена сборка C:\GitTest\calculator\calculator\Debug\calculator.exe при последней инкрементной компоновке; выполняется полная компоновка
+C:\GitTest\calculator\calculator\calculator\calculator.cpp(204): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
   calculator.vcxproj -> C:\GitTest\calculator\calculator\Debug\calculator.exe
