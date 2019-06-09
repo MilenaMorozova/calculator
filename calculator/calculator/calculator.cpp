@@ -119,6 +119,60 @@ void loadFromFile(int x, int y, SDL_Texture* tex, SDL_Renderer* renderer, int w,
 	SDL_RenderCopy(gRenderer, tex, NULL, &renderQuad);
 }
 
+void createWorkspace(SDL_Texture* background, SDL_Texture* arrayOfNumbers[10], SDL_Texture* arrayOfOperations[8], SDL_Texture* buttonPoint, int BUTTON_WIDTH, int BUTTON_HEIGHT, int gapBetweenButtonW, int gapBetweenButtonH, int indentSize, int indentFromAbove) {
+	
+	//Load background
+	SDL_RenderCopy(gRenderer, background, NULL, NULL);
+
+	//-----------------FIRST COLUMN---------------------------
+	//button "SQRT"
+	loadFromFile(indentSize, indentFromAbove, arrayOfOperations[7], gRenderer, BUTTON_WIDTH, BUTTON_HEIGHT);
+	//button "SEVEN"
+	loadFromFile(indentSize, indentFromAbove + BUTTON_HEIGHT + gapBetweenButtonH, arrayOfNumbers[7], gRenderer, BUTTON_WIDTH, BUTTON_HEIGHT);
+	//button "FOUR"
+	loadFromFile(indentSize, indentFromAbove + 2 * (BUTTON_HEIGHT + gapBetweenButtonH), arrayOfNumbers[4], gRenderer, BUTTON_WIDTH, BUTTON_HEIGHT);
+	//button "ONE"
+	loadFromFile(indentSize, indentFromAbove + 3 * (BUTTON_HEIGHT + gapBetweenButtonH), arrayOfNumbers[1], gRenderer, BUTTON_WIDTH, BUTTON_HEIGHT);
+	//button "POINT"
+	loadFromFile(indentSize, indentFromAbove + 4 * (BUTTON_HEIGHT + gapBetweenButtonH), buttonPoint, gRenderer, BUTTON_WIDTH, BUTTON_HEIGHT);
+
+	//-----------------SECOND COLUMN---------------------------
+	//button "EXPONINTIATION"
+	loadFromFile(indentSize + BUTTON_WIDTH + gapBetweenButtonW, indentFromAbove, arrayOfOperations[6], gRenderer, BUTTON_WIDTH, BUTTON_HEIGHT);
+	//button "EIGHT"
+	loadFromFile(indentSize + BUTTON_WIDTH + gapBetweenButtonW, indentFromAbove + BUTTON_HEIGHT + gapBetweenButtonH, arrayOfNumbers[8], gRenderer, BUTTON_WIDTH, BUTTON_HEIGHT);
+	//button "FIVE"
+	loadFromFile(indentSize + BUTTON_WIDTH + gapBetweenButtonW, indentFromAbove + 2 * (BUTTON_HEIGHT + gapBetweenButtonH), arrayOfNumbers[5], gRenderer, BUTTON_WIDTH, BUTTON_HEIGHT);
+	//button "TWO"
+	loadFromFile(indentSize + BUTTON_WIDTH + gapBetweenButtonW, indentFromAbove + 3 * (BUTTON_HEIGHT + gapBetweenButtonH), arrayOfNumbers[2], gRenderer, BUTTON_WIDTH, BUTTON_HEIGHT);
+	//button "ZERO"
+	loadFromFile(indentSize + BUTTON_WIDTH + gapBetweenButtonW, indentFromAbove + 4 * (BUTTON_HEIGHT + gapBetweenButtonH), arrayOfNumbers[0], gRenderer, BUTTON_WIDTH, BUTTON_HEIGHT);
+
+	//-----------------THIRD COLUMN---------------------------
+	//button "DIVISION"
+	loadFromFile(indentSize + 2 * (BUTTON_WIDTH + gapBetweenButtonW), indentFromAbove, arrayOfOperations[5], gRenderer, BUTTON_WIDTH, BUTTON_HEIGHT);
+	//button "NINE"
+	loadFromFile(indentSize + 2 * (BUTTON_WIDTH + gapBetweenButtonW), indentFromAbove + BUTTON_HEIGHT + gapBetweenButtonH, arrayOfNumbers[9], gRenderer, BUTTON_WIDTH, BUTTON_HEIGHT);
+	//button "SIX"
+	loadFromFile(indentSize + 2 * (BUTTON_WIDTH + gapBetweenButtonW), indentFromAbove + 2 * (BUTTON_HEIGHT + gapBetweenButtonH), arrayOfNumbers[6], gRenderer, BUTTON_WIDTH, BUTTON_HEIGHT);
+	//button "THREE"
+	loadFromFile(indentSize + 2 * (BUTTON_WIDTH + gapBetweenButtonW), indentFromAbove + 3 * (BUTTON_HEIGHT + gapBetweenButtonH), arrayOfNumbers[3], gRenderer, BUTTON_WIDTH, BUTTON_HEIGHT);
+	//button "EQUALLY"
+	loadFromFile(indentSize + 2 * (BUTTON_WIDTH + gapBetweenButtonW), indentFromAbove + 4 * (BUTTON_HEIGHT + gapBetweenButtonH), arrayOfOperations[4], gRenderer, BUTTON_WIDTH, BUTTON_HEIGHT);
+
+	//-----------------FOUR COLUMN---------------------------
+	//button "BACKSPACE"
+	loadFromFile(indentSize + 3 * (BUTTON_WIDTH + gapBetweenButtonW), indentFromAbove, arrayOfOperations[3], gRenderer, BUTTON_WIDTH, BUTTON_HEIGHT);
+	//button "MULTIPLICATION"
+	loadFromFile(indentSize + 3 * (BUTTON_WIDTH + gapBetweenButtonW), indentFromAbove + BUTTON_HEIGHT + gapBetweenButtonH, arrayOfOperations[2], gRenderer, BUTTON_WIDTH, BUTTON_HEIGHT);
+	//button "DIFFERENCE"
+	loadFromFile(indentSize + 3 * (BUTTON_WIDTH + gapBetweenButtonW), indentFromAbove + 2 * (BUTTON_HEIGHT + gapBetweenButtonH), arrayOfOperations[1], gRenderer, BUTTON_WIDTH, BUTTON_HEIGHT);
+	//button "SUMMA"
+	loadFromFile(indentSize + 3 * (BUTTON_WIDTH + gapBetweenButtonW), indentFromAbove + 3 * (BUTTON_HEIGHT + gapBetweenButtonH), arrayOfOperations[0], gRenderer, BUTTON_WIDTH, 2 * BUTTON_HEIGHT + gapBetweenButtonH);
+
+	SDL_RenderPresent(gRenderer);
+}
+
 void freeTexture(SDL_Texture* texture) {
 	SDL_DestroyTexture(texture);
 	texture = NULL;
@@ -144,17 +198,74 @@ int main(int argc, char* args[])
 	{
 		printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
 	}	else {
+		//loop flag
+		int quit = 0;
+
+		//Event handler
+		SDL_Event events;
 
 		//background of calculator
-		SDL_Texture* background = loadTexture("base.png");
-		//Load background
-		SDL_RenderCopy(gRenderer, background, NULL, NULL);
-		SDL_RenderPresent(gRenderer);
-		
+		SDL_Texture* background = loadTexture("base2.png");
+
+//-------------------BUTTONS-----------------------------
+		//array of number textures
+		SDL_Texture* arrayOfNumbers[10] = {		loadTexture("button zero.png"),
+												loadTexture("button one.png"),
+												loadTexture("button two.png"),
+												loadTexture("button three.png"),
+												loadTexture("button four.png"),
+												loadTexture("button five.png"),
+												loadTexture("button six.png"),
+												loadTexture("button seven.png"),
+												loadTexture("button eight.png"),
+												loadTexture("button nine.png")	};
+		//array of texture operations
+		SDL_Texture* arrayOfOperations[8] = { loadTexture("button summa.png"),
+											loadTexture("button difference.png"),
+											loadTexture("button multiplication.png"),
+											loadTexture("button backspace.png"),
+											loadTexture("button equally.png"),
+											loadTexture("button division.png"),
+											loadTexture("button exponentiation.png"),
+											loadTexture("button sqrt.png")
+		};
+
+		//button "POINT"
+		SDL_Texture* buttonPoint = loadTexture("button point.png");
+
+		//size of buttons
+		int BUTTON_WIDTH = 122, BUTTON_HEIGHT = 82;
+
+		//size of gaps between buttons
+		int gapBetweenButtonW = 20, gapBetweenButtonH = 15;
+
+		//indent from edge
+		int indentSize = 16, indentFromAbove = 210;
+
+		//create workspace of application
+		createWorkspace(background, arrayOfNumbers,arrayOfOperations, buttonPoint, BUTTON_WIDTH, BUTTON_HEIGHT, gapBetweenButtonW, gapBetweenButtonH, indentSize,indentFromAbove);
+
+	//While application is running
+		while (!quit) {
+			//Load background
+			//SDL_RenderCopy(gRenderer, background, NULL, NULL);
+			
+			//Handle events on queue
+			while (SDL_PollEvent(&events) != 0) {
+				//User requests quit
+				if (events.type == SDL_QUIT) {
+					quit = 1;
+				}
+			}
+		}
 		//Quit SDL subsystems
 		freeTexture(background);
-		//close();
-		_getch();
+		freeTexture(buttonPoint);
+		for (int i = 0, j = 0; i < 10, j < 8; i++, j++) {
+			freeTexture(arrayOfNumbers[i]);
+			freeTexture(arrayOfOperations[j]);
+		}
+		close();
 	}
 	return 0;
 }
