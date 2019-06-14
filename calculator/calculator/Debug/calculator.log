@@ -1,3 +1,4 @@
 ﻿  calculator.cpp
-C:\GitTest\calculator\calculator\calculator\calculator.cpp(259): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
-  calculator.vcxproj -> C:\GitTest\calculator\calculator\Debug\calculator.exe
+D:\git\calculator\calculator\calculator\BUTTON.h(18): warning C4091: typedef : пропускается слева от "button", когда ни одна переменная не объявлена
+D:\git\calculator\calculator\calculator\calculator.cpp(223): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+  calculator.vcxproj -> D:\git\calculator\calculator\Debug\calculator.exe
