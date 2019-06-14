@@ -11,7 +11,7 @@
 const int SCREEN_WIDTH = 580;
 const int SCREEN_HEIGHT = 700;
 const int maxAfterPoint = 8;
-int col0 = 0;
+
 //--------GLOBAL VARIABLES------
 //The window we'll be rendering to
 SDL_Window* gWindow = NULL;
@@ -27,7 +27,6 @@ int init();
 SDL_Texture* loadTexture(std::string path);
 
 //draw image from file to screen
-void loadFromFile(int x, int y, SDL_Texture* tex, SDL_Renderer* renderer, int w, int h);
 
 //------FREES MEDIA AND SHUTS DOWN SDL------------------
 void close();
@@ -115,7 +114,7 @@ SDL_Texture* loadTexture(std::string path) {
 	return newTexture;
 }
 
-void loadFromFile(int x, int y, SDL_Texture* tex, SDL_Renderer* renderer, int w, int h) {
+void loadFromFile(int x, int y, SDL_Texture* tex, int w, int h) {
 	SDL_Rect renderQuad = { x, y,w, h };
 	SDL_RenderCopy(gRenderer, tex, NULL, &renderQuad);
 }
@@ -127,49 +126,49 @@ void createWorkspace(SDL_Texture* background, SDL_Texture* arrayOfNumbers[10], S
 
 	//-----------------FIRST COLUMN---------------------------
 	//button "SQRT"
-	loadFromFile(indentSize, indentFromAbove, arrayOfOperations[7], gRenderer, BUTTON_WIDTH, BUTTON_HEIGHT);
+	loadFromFile(indentSize, indentFromAbove, arrayOfOperations[7],  BUTTON_WIDTH, BUTTON_HEIGHT);
 	//button "SEVEN"
-	loadFromFile(indentSize, indentFromAbove + BUTTON_HEIGHT + gapBetweenButtonH, arrayOfNumbers[7], gRenderer, BUTTON_WIDTH, BUTTON_HEIGHT);
+	loadFromFile(indentSize, indentFromAbove + BUTTON_HEIGHT + gapBetweenButtonH, arrayOfNumbers[7],  BUTTON_WIDTH, BUTTON_HEIGHT);
 	//button "FOUR"
-	loadFromFile(indentSize, indentFromAbove + 2 * (BUTTON_HEIGHT + gapBetweenButtonH), arrayOfNumbers[4], gRenderer, BUTTON_WIDTH, BUTTON_HEIGHT);
+	loadFromFile(indentSize, indentFromAbove + 2 * (BUTTON_HEIGHT + gapBetweenButtonH), arrayOfNumbers[4], BUTTON_WIDTH, BUTTON_HEIGHT);
 	//button "ONE"
-	loadFromFile(indentSize, indentFromAbove + 3 * (BUTTON_HEIGHT + gapBetweenButtonH), arrayOfNumbers[1], gRenderer, BUTTON_WIDTH, BUTTON_HEIGHT);
+	loadFromFile(indentSize, indentFromAbove + 3 * (BUTTON_HEIGHT + gapBetweenButtonH), arrayOfNumbers[1],  BUTTON_WIDTH, BUTTON_HEIGHT);
 	//button "POINT"
-	loadFromFile(indentSize, indentFromAbove + 4 * (BUTTON_HEIGHT + gapBetweenButtonH), buttonPoint, gRenderer, BUTTON_WIDTH, BUTTON_HEIGHT);
+	loadFromFile(indentSize, indentFromAbove + 4 * (BUTTON_HEIGHT + gapBetweenButtonH), buttonPoint,  BUTTON_WIDTH, BUTTON_HEIGHT);
 
 	//-----------------SECOND COLUMN---------------------------
 	//button "EXPONINTIATION"
-	loadFromFile(indentSize + BUTTON_WIDTH + gapBetweenButtonW, indentFromAbove, arrayOfOperations[6], gRenderer, BUTTON_WIDTH, BUTTON_HEIGHT);
+	loadFromFile(indentSize + BUTTON_WIDTH + gapBetweenButtonW, indentFromAbove, arrayOfOperations[6],  BUTTON_WIDTH, BUTTON_HEIGHT);
 	//button "EIGHT"
-	loadFromFile(indentSize + BUTTON_WIDTH + gapBetweenButtonW, indentFromAbove + BUTTON_HEIGHT + gapBetweenButtonH, arrayOfNumbers[8], gRenderer, BUTTON_WIDTH, BUTTON_HEIGHT);
+	loadFromFile(indentSize + BUTTON_WIDTH + gapBetweenButtonW, indentFromAbove + BUTTON_HEIGHT + gapBetweenButtonH, arrayOfNumbers[8],  BUTTON_WIDTH, BUTTON_HEIGHT);
 	//button "FIVE"
-	loadFromFile(indentSize + BUTTON_WIDTH + gapBetweenButtonW, indentFromAbove + 2 * (BUTTON_HEIGHT + gapBetweenButtonH), arrayOfNumbers[5], gRenderer, BUTTON_WIDTH, BUTTON_HEIGHT);
+	loadFromFile(indentSize + BUTTON_WIDTH + gapBetweenButtonW, indentFromAbove + 2 * (BUTTON_HEIGHT + gapBetweenButtonH), arrayOfNumbers[5],  BUTTON_WIDTH, BUTTON_HEIGHT);
 	//button "TWO"
-	loadFromFile(indentSize + BUTTON_WIDTH + gapBetweenButtonW, indentFromAbove + 3 * (BUTTON_HEIGHT + gapBetweenButtonH), arrayOfNumbers[2], gRenderer, BUTTON_WIDTH, BUTTON_HEIGHT);
+	loadFromFile(indentSize + BUTTON_WIDTH + gapBetweenButtonW, indentFromAbove + 3 * (BUTTON_HEIGHT + gapBetweenButtonH), arrayOfNumbers[2],  BUTTON_WIDTH, BUTTON_HEIGHT);
 	//button "ZERO"
-	loadFromFile(indentSize + BUTTON_WIDTH + gapBetweenButtonW, indentFromAbove + 4 * (BUTTON_HEIGHT + gapBetweenButtonH), arrayOfNumbers[0], gRenderer, BUTTON_WIDTH, BUTTON_HEIGHT);
+	loadFromFile(indentSize + BUTTON_WIDTH + gapBetweenButtonW, indentFromAbove + 4 * (BUTTON_HEIGHT + gapBetweenButtonH), arrayOfNumbers[0], BUTTON_WIDTH, BUTTON_HEIGHT);
 
 	//-----------------THIRD COLUMN---------------------------
 	//button "DIVISION"
-	loadFromFile(indentSize + 2 * (BUTTON_WIDTH + gapBetweenButtonW), indentFromAbove, arrayOfOperations[5], gRenderer, BUTTON_WIDTH, BUTTON_HEIGHT);
+	loadFromFile(indentSize + 2 * (BUTTON_WIDTH + gapBetweenButtonW), indentFromAbove, arrayOfOperations[5], BUTTON_WIDTH, BUTTON_HEIGHT);
 	//button "NINE"
-	loadFromFile(indentSize + 2 * (BUTTON_WIDTH + gapBetweenButtonW), indentFromAbove + BUTTON_HEIGHT + gapBetweenButtonH, arrayOfNumbers[9], gRenderer, BUTTON_WIDTH, BUTTON_HEIGHT);
+	loadFromFile(indentSize + 2 * (BUTTON_WIDTH + gapBetweenButtonW), indentFromAbove + BUTTON_HEIGHT + gapBetweenButtonH, arrayOfNumbers[9], BUTTON_WIDTH, BUTTON_HEIGHT);
 	//button "SIX"
-	loadFromFile(indentSize + 2 * (BUTTON_WIDTH + gapBetweenButtonW), indentFromAbove + 2 * (BUTTON_HEIGHT + gapBetweenButtonH), arrayOfNumbers[6], gRenderer, BUTTON_WIDTH, BUTTON_HEIGHT);
+	loadFromFile(indentSize + 2 * (BUTTON_WIDTH + gapBetweenButtonW), indentFromAbove + 2 * (BUTTON_HEIGHT + gapBetweenButtonH), arrayOfNumbers[6], BUTTON_WIDTH, BUTTON_HEIGHT);
 	//button "THREE"
-	loadFromFile(indentSize + 2 * (BUTTON_WIDTH + gapBetweenButtonW), indentFromAbove + 3 * (BUTTON_HEIGHT + gapBetweenButtonH), arrayOfNumbers[3], gRenderer, BUTTON_WIDTH, BUTTON_HEIGHT);
+	loadFromFile(indentSize + 2 * (BUTTON_WIDTH + gapBetweenButtonW), indentFromAbove + 3 * (BUTTON_HEIGHT + gapBetweenButtonH), arrayOfNumbers[3], BUTTON_WIDTH, BUTTON_HEIGHT);
 	//button "EQUALLY"
-	loadFromFile(indentSize + 2 * (BUTTON_WIDTH + gapBetweenButtonW), indentFromAbove + 4 * (BUTTON_HEIGHT + gapBetweenButtonH), arrayOfOperations[4], gRenderer, BUTTON_WIDTH, BUTTON_HEIGHT);
+	loadFromFile(indentSize + 2 * (BUTTON_WIDTH + gapBetweenButtonW), indentFromAbove + 4 * (BUTTON_HEIGHT + gapBetweenButtonH), arrayOfOperations[4], BUTTON_WIDTH, BUTTON_HEIGHT);
 
 	//-----------------FOUR COLUMN---------------------------
 	//button "BACKSPACE"
-	loadFromFile(indentSize + 3 * (BUTTON_WIDTH + gapBetweenButtonW), indentFromAbove, arrayOfOperations[3], gRenderer, BUTTON_WIDTH, BUTTON_HEIGHT);
+	loadFromFile(indentSize + 3 * (BUTTON_WIDTH + gapBetweenButtonW), indentFromAbove, arrayOfOperations[3], BUTTON_WIDTH, BUTTON_HEIGHT);
 	//button "MULTIPLICATION"
-	loadFromFile(indentSize + 3 * (BUTTON_WIDTH + gapBetweenButtonW), indentFromAbove + BUTTON_HEIGHT + gapBetweenButtonH, arrayOfOperations[2], gRenderer, BUTTON_WIDTH, BUTTON_HEIGHT);
+	loadFromFile(indentSize + 3 * (BUTTON_WIDTH + gapBetweenButtonW), indentFromAbove + BUTTON_HEIGHT + gapBetweenButtonH, arrayOfOperations[2], BUTTON_WIDTH, BUTTON_HEIGHT);
 	//button "DIFFERENCE"
-	loadFromFile(indentSize + 3 * (BUTTON_WIDTH + gapBetweenButtonW), indentFromAbove + 2 * (BUTTON_HEIGHT + gapBetweenButtonH), arrayOfOperations[1], gRenderer, BUTTON_WIDTH, BUTTON_HEIGHT);
+	loadFromFile(indentSize + 3 * (BUTTON_WIDTH + gapBetweenButtonW), indentFromAbove + 2 * (BUTTON_HEIGHT + gapBetweenButtonH), arrayOfOperations[1], BUTTON_WIDTH, BUTTON_HEIGHT);
 	//button "SUMMA"
-	loadFromFile(indentSize + 3 * (BUTTON_WIDTH + gapBetweenButtonW), indentFromAbove + 3 * (BUTTON_HEIGHT + gapBetweenButtonH), arrayOfOperations[0], gRenderer, BUTTON_WIDTH, 2 * BUTTON_HEIGHT + gapBetweenButtonH);
+	loadFromFile(indentSize + 3 * (BUTTON_WIDTH + gapBetweenButtonW), indentFromAbove + 3 * (BUTTON_HEIGHT + gapBetweenButtonH), arrayOfOperations[0], BUTTON_WIDTH, 2 * BUTTON_HEIGHT + gapBetweenButtonH);
 
 	SDL_RenderPresent(gRenderer);
 }
@@ -191,8 +190,9 @@ void close()
 	IMG_Quit();
 	SDL_Quit();
 }
-int SymbolsAfterComma(double number)
+int SymbolsAfterPoint(double number)
 {
+	number = abs(number);
 	//counts the symbols after comma
 	number += pow(10,-maxAfterPoint-2);
 	int col = 0;
@@ -203,10 +203,11 @@ int SymbolsAfterComma(double number)
 		if (((int)number % 10) != 0)
 			col = i;
 	}
-	return col+col0;
+	return col;
 }
-int SymbolsBeforeComma(double number)
+int SymbolsBeforePoint(double number)
 {
+	number = abs(number);
 	//counts the symbols before comma
 	int i = 0;
 	int N = (int)(number);
@@ -217,95 +218,143 @@ int SymbolsBeforeComma(double number)
 	}
 	return i;
 }
-void UpdateDisplay(double AllNumber, int comma, SDL_Texture** numbers)
+void UpdateDisplay(double AllNumber, int point,int col0, SDL_Texture** numbers)
 {
 	//variable calculation
-	int nullposx = (int)(SCREEN_WIDTH * 0.815);
-	int nullposy = (int)(SCREEN_HEIGHT * 0.067);
-	int numbsizex = (int)(SCREEN_WIDTH * 0.1);
+	int nullposx = (int)(SCREEN_WIDTH * 0.83);
+	int nullposy = (int)(SCREEN_HEIGHT * 0.105);
+	int numbsizex = (int)(SCREEN_WIDTH * 0.05);
 	int numbsizey = (int)(numbsizex * 3 / 2);
-	int afcom = SymbolsAfterComma(AllNumber);
-	int befcom = SymbolsBeforeComma(AllNumber);
+	int afcom = SymbolsAfterPoint(AllNumber);
+	int befcom = SymbolsBeforePoint(AllNumber);
 	int colvivod = 0;
 	double Allnumb = AllNumber - (int)AllNumber;
 
 	//Clean display
-	for (int i = 0; i < 8; i++)
+	for (int i = 0; i < 15; i++)
 	{
-		loadFromFile(nullposx - (i * numbsizex), nullposy, numbers[11], gRenderer, numbsizex, numbsizey);
+		loadFromFile(nullposx - (i * numbsizex), nullposy, numbers[11], numbsizex, numbsizey);
 	}
 	//output on display 0
 	for (int i = 0; i < col0; i++)
 	{
-		loadFromFile(nullposx - (colvivod * numbsizex), nullposy, numbers[0], gRenderer, numbsizex, numbsizey);
+		loadFromFile(nullposx - (colvivod * numbsizex), nullposy, numbers[0], numbsizex, numbsizey);
 		colvivod++;
 	}
-	//output on display symbols after comma
-	for (; afcom-col0 > 0; afcom--)
+	//output on display symbols after point
+	for (; afcom > 0; afcom--)
 	{
 		int numb = ((int)(Allnumb * pow(10, afcom))) % 10;
-		loadFromFile(nullposx - (colvivod * numbsizex), nullposy, numbers[numb], gRenderer, numbsizex, numbsizey);
+		numb = abs(numb);
+		loadFromFile(nullposx - (colvivod * numbsizex), nullposy, numbers[numb], numbsizex, numbsizey);
 		colvivod++;
 	}
-	
 
-	//output on display comma
-	if(comma)
-		loadFromFile(nullposx - (colvivod * numbsizex)+ (numbsizex / 2), nullposy, numbers[10], gRenderer, numbsizex/2, numbsizey);
-	//output on display symbols before comma
+	//output on display point
+	if(point)
+		loadFromFile(nullposx - (colvivod * numbsizex)+ (numbsizex / 2), nullposy, numbers[10], numbsizex/2, numbsizey);
+	//output on display symbols before point
 	if (befcom != 0)
 	{
-		int allnum = floor(AllNumber);
+		int allnum = floor(abs(AllNumber));
 		while(allnum)
 		{
 			int numb = allnum % 10;
-			loadFromFile(nullposx - (colvivod * numbsizex)-((numbsizex / 2)*comma), nullposy, numbers[numb], gRenderer, numbsizex, numbsizey);
+			numb = abs(numb);
+			loadFromFile(nullposx - (colvivod * numbsizex)-((numbsizex / 2)*point), nullposy, numbers[numb], numbsizex, numbsizey);
 			allnum /= 10;
 			colvivod++;
 		}
 	}
 	else
 	{
-		loadFromFile(nullposx - (colvivod * numbsizex) - ((numbsizex / 2) * comma), nullposy, numbers[0], gRenderer, numbsizex, numbsizey);
+		loadFromFile(nullposx - (colvivod * numbsizex) - ((numbsizex / 2) * point), nullposy, numbers[0], numbsizex, numbsizey);
 	}
-
+	if (AllNumber < 0)
+	{
+		loadFromFile(nullposx - (colvivod * numbsizex) - ((numbsizex / 2) * point)+ (numbsizex / 2), nullposy, numbers[12], numbsizex/2, numbsizey);
+	}
 
 	SDL_RenderPresent(gRenderer);
 }
-void ClickToNumber(int input,int* comma,double* AllNumber, SDL_Texture** numbers)
+void ClickToNumber(int input, double* AllNumber)
 {
-	if (input < 0 || input>11)
+	if (input < -2 || input>12)
 		return;
-	int AfCom = SymbolsAfterComma(*AllNumber);
-	if (input == 11)
-	{//input Backspace
+	static int point;
+	static int col0;
+	static SDL_Texture* numbers[13];
+	int AfCom = SymbolsAfterPoint(*AllNumber);
+	
+	//update variables
+	if (input == -1)
+	{
+		point = 0;
+		col0 = 0;
+		numbers[0] = loadTexture("null.jpg");
+		numbers[1] = loadTexture("one.jpg");
+		numbers[2] = loadTexture("two.jpg"); 
+		numbers[3] = loadTexture("three.jpg");
+		numbers[4] = loadTexture("four.jpg"); 
+		numbers[5] = loadTexture("five.jpg");
+		numbers[6] = loadTexture("six.jpg");
+		numbers[7] = loadTexture("seven.jpg");
+		numbers[8] = loadTexture("eight.jpg");
+		numbers[9] = loadTexture("nine.jpg");
+		numbers[10] = loadTexture("comma.jpg");
+		numbers[11] = loadTexture("empty.jpg");
+		numbers[12] = loadTexture("minus.jpg");
+	}
+	//update variables to number
+	else if (input == -2)
+	{
+		if (SymbolsAfterPoint > 0)
+			point = 1;
+		else
+			point = 0;
+			
+		col0 = 0;
+	}
+	//input swap sign
+	else if (input == 12)
+	{ 
+		*AllNumber *= -1;
+	}
+	//input Backspace
+	else if (input == 11)
+	{
 		if (AfCom == 0)
 		{
-			if (*comma)
-				* comma = 0;
+			if (point)
+				point = 0;
 			else
 			*AllNumber = (*AllNumber - (((int)(*AllNumber))% 10)) / 10;
 		}
 		else
 		{
+			if (col0 > 0)
+				col0--;
+			else
 			*AllNumber = *AllNumber - ((((int)(*AllNumber * pow(10, AfCom))) % 10) * pow(10, -AfCom));
 		}
 		
 	}
+	//input comma
 	else if(input == 10)
-	{//input comma
+	{
 		if(AfCom == 0)
-		*comma = !*comma;
+		point = !point;
 		else
 		{
 			return;
 		}
 	}
-	else
-	{//input number
-		if (*comma == 0)
+	//input number
+	else 
+	{
+		if (point == 0)
 		{
-			*AllNumber = *AllNumber * 10 + input;
+			*AllNumber = *AllNumber * 10 + ((*AllNumber>=0)?input:-input);
 		}
 		else
 		{
@@ -315,13 +364,80 @@ void ClickToNumber(int input,int* comma,double* AllNumber, SDL_Texture** numbers
 				col0++;
 			else
 			{
-				*AllNumber = *AllNumber + (input * pow(10, -AfCom - 1));
+				*AllNumber = *AllNumber + (((*AllNumber >= 0) ? input : -input) * pow(10, -AfCom - 1));
 				col0 = 0;
 			}
 		}
-	}
-	UpdateDisplay(*AllNumber, *comma, numbers);
+	}   
+	UpdateDisplay(*AllNumber, point,col0, numbers);
 }
+void DoOperation(int input, double* AllNumber, double* MemNumber,int* sign)
+{
+	if (input < -2 || input>18)
+		return;
+
+	if (input == 11)
+	{
+		if (*sign == 12)
+		{
+			*AllNumber = (*MemNumber) + (*AllNumber);
+		}
+		else if (*sign == 13)
+		{
+			*AllNumber = (*MemNumber) - (*AllNumber);
+		}
+		else if (*sign == 14)
+		{
+			*AllNumber = (*MemNumber) * (*AllNumber);
+		}
+		else if (*sign == 16)
+		{
+			*AllNumber = (*MemNumber) / (*AllNumber);
+		}
+		*MemNumber = DBL_MIN;
+		ClickToNumber(-2, AllNumber);
+		return;
+	}
+
+	if (*MemNumber != DBL_MIN)
+		return;
+	if (input == 18)
+	{
+		*sign = 0;
+		*AllNumber = sqrt(*AllNumber);
+		ClickToNumber(-2, AllNumber);
+		return;
+	}
+	*MemNumber = *AllNumber;
+	*AllNumber = 0;
+	ClickToNumber(-1, AllNumber);
+	*sign = input;
+
+
+}
+void ClickToButton(int input, double* AllNumber, double* MemNumber,int* sign)
+{
+	
+	if (input < 11)
+	{
+		ClickToNumber(input, AllNumber);
+	}
+	else if (input == 15)
+	{
+		ClickToNumber(11, AllNumber);
+	}
+	else if (input == 17)
+	{
+		ClickToNumber(12, AllNumber);
+	}
+	else
+	{
+		DoOperation(input, AllNumber, MemNumber,sign);
+	}
+}
+
+
+
 
 
 
@@ -334,18 +450,18 @@ int main(int argc, char* args[])
 	}	else {
 		//loop flag
 		int quit = 0;
+		
 
 		//Event handler
 		SDL_Event events;
 
 		double AllNumber = 0;
-		int comma = 0;
-		
-		//background of calculator
+		double memNumber = DBL_MIN;
+		int sign = 0;
+			//background of calculator
 
 		//numbers for display
-		SDL_Texture* numbers[12] = { loadTexture("null.jpg"),loadTexture("one.jpg"),loadTexture("two.jpg"),loadTexture("three.jpg"),loadTexture("four.jpg"),loadTexture("five.jpg"),loadTexture("six.jpg"),loadTexture("seven.jpg"),loadTexture("eight.jpg"),loadTexture("nine.jpg"),loadTexture("comma.jpg"),loadTexture("empty.jpg") };
-
+		
 		SDL_Texture* background = loadTexture("base2.png");
 
 //-------------------BUTTONS-----------------------------
@@ -379,12 +495,20 @@ int main(int argc, char* args[])
 
 		//size of gaps between buttons
 		int gapBetweenButtonW = 20, gapBetweenButtonH = 15;
+		
 
 		//indent from edge
 		int indentSize = 16, indentFromAbove = 210;
 
 		//create workspace of application
 		createWorkspace(background, arrayOfNumbers,arrayOfOperations, buttonPoint, BUTTON_WIDTH, BUTTON_HEIGHT, gapBetweenButtonW, gapBetweenButtonH, indentSize,indentFromAbove);
+		int vvod = -1;
+		while (vvod!= -3)
+		{
+			ClickToButton(vvod, &AllNumber, &memNumber,&sign);
+			scanf_s("%i", &vvod);
+		}
+		
 
 	//While application is running
 		while (!quit) {
