@@ -19,25 +19,6 @@ SDL_Window* gWindow = NULL;
 //The window renderer
 SDL_Renderer* gRenderer = NULL;
 
-//Starts up SDL and creates window
-int init();
-
-//---------FUNCTION THAT ARE RESPONSIBLE FOR ALL WITH MEDIA-------------
-//create texture
-SDL_Texture* loadTexture(std::string path);
-
-//draw image from file to screen
-
-void loadFromFile(int x, int y, SDL_Texture* tex, int w, int h);
-
-//create workspace
-void createWorkspace(SDL_Texture* background, button arrayOfNumAndOper[19]);
-
-
-//------FREES MEDIA AND SHUTS DOWN SDL------------------
-void close();
-void freeTexture(SDL_Texture* texture);
-
 int init()
 {
 	//Initialization flag
@@ -381,7 +362,9 @@ void DoOperation(int input, double* AllNumber, double* MemNumber,int* sign)
 }
 void ClickToButton(int input, double* AllNumber, double* MemNumber,int* sign)
 {
-	
+	if (input < -2 || input > 18) {
+		return;
+	}
 	if (input < 11)
 	{
 		ClickToNumber(input, AllNumber);
@@ -400,6 +383,36 @@ void ClickToButton(int input, double* AllNumber, double* MemNumber,int* sign)
 	}
 }
 
+int checkMouseLocation(button arrayOfNumAndOper[19]) {
+	int x_curMousePos, y_curMousePos;
+	SDL_GetMouseState(&x_curMousePos, &y_curMousePos);
+	for (int i = 0; i < 19; i++) {
+		int inside = 1;
+		//Mouse is left of the button
+		if (x_curMousePos < arrayOfNumAndOper[i].coordX)
+		{
+			inside = 0;
+		}
+		//Mouse is right of the button
+		else if (x_curMousePos > arrayOfNumAndOper[i].coordX + arrayOfNumAndOper[i].button_width)
+		{
+			inside = 0;
+		}
+		//Mouse above the button
+		else if (y_curMousePos < arrayOfNumAndOper[i].coordY)
+		{
+			inside = 0;
+		}
+		//Mouse below the button
+		else if (y_curMousePos > arrayOfNumAndOper[i].coordY + arrayOfNumAndOper[i].button_height)
+		{
+			inside = 0;
+		}
+		if (inside) {
+			return i;
+		}
+	}
+}
 
 
 
@@ -422,7 +435,7 @@ int main(int argc, char* args[])
 		double AllNumber = 0;
 		double memNumber = DBL_MIN;
 		int sign = 0;
-			//background of calculator
+		
 
 		//numbers for display
 		
@@ -461,6 +474,9 @@ int main(int argc, char* args[])
 				//User requests quit
 				if (events.type == SDL_QUIT) {
 					quit = 1;
+				}
+				if (events.type == SDL_MOUSEBUTTONDOWN) {
+					ClickToButton(checkMouseLocation(arrayOfNumAndOper), &AllNumber, &memNumber, &sign);
 				}
 			}
 		}

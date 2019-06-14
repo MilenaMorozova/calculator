@@ -1,4 +1,5 @@
 ﻿  calculator.cpp
 D:\git\calculator\calculator\calculator\BUTTON.h(18): warning C4091: typedef : пропускается слева от "button", когда ни одна переменная не объявлена
-D:\git\calculator\calculator\calculator\calculator.cpp(223): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+D:\git\calculator\calculator\calculator\calculator.cpp(204): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+D:\git\calculator\calculator\calculator\calculator.cpp(415): warning C4715: checkMouseLocation: значение возвращается не при всех путях выполнения
   calculator.vcxproj -> D:\git\calculator\calculator\Debug\calculator.exe
