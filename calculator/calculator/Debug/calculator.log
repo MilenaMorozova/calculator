@@ -1,2 +1,3 @@
 ﻿  calculator.cpp
+D:\git\calculator\calculator\calculator\BUTTON.h(18): warning C4091: typedef : пропускается слева от "button", когда ни одна переменная не объявлена
   calculator.vcxproj -> D:\git\calculator\calculator\Debug\calculator.exe

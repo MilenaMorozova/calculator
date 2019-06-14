@@ -163,6 +163,9 @@
   <ItemGroup>
     <ClCompile Include="calculator.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BUTTON.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
