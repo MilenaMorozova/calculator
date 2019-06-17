@@ -10,8 +10,8 @@
 //Screen dimension constants
 const int SCREEN_WIDTH = 580;
 const int SCREEN_HEIGHT = 700;
-const int maxAfterPoint = 8;
-
+const int maxCh = 14;
+const int maxBef = 8;
 //--------GLOBAL VARIABLES------
 //The window we'll be rendering to
 SDL_Window* gWindow = NULL;
@@ -135,21 +135,6 @@ void close()
 	IMG_Quit();
 	SDL_Quit();
 }
-int SymbolsAfterPoint(double number)
-{
-	number = abs(number);
-	//counts the symbols after comma
-	number += pow(10,-maxAfterPoint-2);
-	int col = 0;
-	for (int i = 1; i < maxAfterPoint+1; i++)
-	{
-		number -= (int)(number);
-		number *= 10;
-		if (((int)number % 10) != 0)
-			col = i;
-	}
-	return col;
-}
 int SymbolsBeforePoint(double number)
 {
 	number = abs(number);
@@ -163,6 +148,23 @@ int SymbolsBeforePoint(double number)
 	}
 	return i;
 }
+int SymbolsAfterPoint(double number)
+{
+	number = abs(number);
+	int BefPoint = SymbolsBeforePoint(number);
+	//counts the symbols after comma
+	number += pow(10,-(maxCh - BefPoint+2));
+	int col = 0;
+	for (int i = 1; i <= maxCh - maxBef; i++)
+	{
+		number -= (int)(number);
+		number *= 10;
+		if (((int)number % 10) != 0)
+			col = i;
+	}
+	return col;
+}
+
 void UpdateDisplay(double AllNumber, int point,int col0, SDL_Texture** numbers)
 {
 	//variable calculation
@@ -173,10 +175,13 @@ void UpdateDisplay(double AllNumber, int point,int col0, SDL_Texture** numbers)
 	int afcom = SymbolsAfterPoint(AllNumber);
 	int befcom = SymbolsBeforePoint(AllNumber);
 	int colvivod = 0;
-	double Allnumb = AllNumber - (int)AllNumber;
 
+   
+	double Allnumb = modf(AllNumber, &Allnumb);
+	double pogr = (pow(10, -7) * ((AllNumber >= 0) ? 1 : -1));
+	Allnumb += pogr;
 	//Clean display
-	for (int i = 0; i < 15; i++)
+	for (int i = 0; i < maxCh + 1; i++)
 	{
 		loadFromFile(nullposx - (i * numbsizex), nullposy, numbers[11], numbsizex, numbsizey);
 	}
@@ -187,6 +192,8 @@ void UpdateDisplay(double AllNumber, int point,int col0, SDL_Texture** numbers)
 		colvivod++;
 	}
 	//output on display symbols after point
+	if (afcom >= maxCh - maxBef-col0)
+		afcom = maxCh - maxBef-col0;
 	for (; afcom > 0; afcom--)
 	{
 		int numb = ((int)(Allnumb * pow(10, afcom))) % 10;
@@ -214,6 +221,7 @@ void UpdateDisplay(double AllNumber, int point,int col0, SDL_Texture** numbers)
 	else
 	{
 		loadFromFile(nullposx - (colvivod * numbsizex) - ((numbsizex / 2) * point), nullposy, numbers[0], numbsizex, numbsizey);
+		colvivod++;
 	}
 	if (AllNumber < 0)
 	{
@@ -230,7 +238,7 @@ void ClickToNumber(int input, double* AllNumber)
 	static int col0;
 	static SDL_Texture* numbers[13];
 	int AfCom = SymbolsAfterPoint(*AllNumber);
-	
+	int BefCom = SymbolsBeforePoint(*AllNumber);
 	//update variables
 	if (input == -1)
 	{
@@ -297,25 +305,33 @@ void ClickToNumber(int input, double* AllNumber)
 	//input number
 	else 
 	{
-		if (point == 0)
+		if (AfCom + BefCom+col0 >= maxCh)
 		{
+		}
+		else if (point == 0)
+		{
+			if (BefCom < 9)
 			*AllNumber = *AllNumber * 10 + ((*AllNumber>=0)?input:-input);
+			
 		}
 		else
 		{
-			if (AfCom == maxAfterPoint)
-				return;
-			if (input == 0)
+			if (AfCom + col0 >= maxCh - maxBef)
+			{
+
+			}
+			else if (input == 0)
 				col0++;
 			else
 			{
-				*AllNumber = *AllNumber + (((*AllNumber >= 0) ? input : -input) * pow(10, -AfCom - 1));
+				*AllNumber = *AllNumber + (((*AllNumber >= 0) ? input : -input) * pow(10, -AfCom -col0 - 1));
 				col0 = 0;
 			}
 		}
 	}   
 	UpdateDisplay(*AllNumber, point,col0, numbers);
 }
+
 void DoOperation(int input, double* AllNumber, double* MemNumber,int* sign)
 {
 	if (input < -2 || input>18)
@@ -348,6 +364,8 @@ void DoOperation(int input, double* AllNumber, double* MemNumber,int* sign)
 		return;
 	if (input == 18)
 	{
+		if (*AllNumber < 0)
+			return;
 		*sign = 0;
 		*AllNumber = sqrt(*AllNumber);
 		ClickToNumber(-2, AllNumber);
