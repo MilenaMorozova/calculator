@@ -261,7 +261,7 @@ void ClickToNumber(int input, double* AllNumber)
 	//update variables to number
 	else if (input == -2)
 	{
-		if (SymbolsAfterPoint > 0)
+		if (AfCom > 0)
 			point = 1;
 		else
 			point = 0;
@@ -288,7 +288,14 @@ void ClickToNumber(int input, double* AllNumber)
 			if (col0 > 0)
 				col0--;
 			else
-			*AllNumber = *AllNumber - ((((int)(*AllNumber * pow(10, AfCom))) % 10) * pow(10, -AfCom));
+			{
+				*AllNumber += pow(10,-8) * ((*AllNumber > 0) ? 1 : -1);
+				double st = modf(*AllNumber, &st);
+				st =((int)(st * pow(10, AfCom))) % 10;
+				st = st * pow(10, -AfCom);
+				*AllNumber -=(st * ((*AllNumber > 0) ? 1:-1));
+				*AllNumber -= pow(10, -8) * ((*AllNumber > 0) ? 1 : -1);
+			}
 		}
 		
 	}
