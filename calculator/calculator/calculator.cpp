@@ -216,6 +216,8 @@ void UpdateDisplay(double AllNumber, int point,int col0, SDL_Texture** numbers)
 			loadFromFile(nullposx - (colvivod * numbsizex)-((numbsizex / 2)*point), nullposy, numbers[numb], numbsizex, numbsizey);
 			allnum /= 10;
 			colvivod++;
+			if (colvivod == maxCh)
+				break;
 		}
 	}
 	else
@@ -289,12 +291,12 @@ void ClickToNumber(int input, double* AllNumber)
 				col0--;
 			else
 			{
-				*AllNumber += pow(10,-8) * ((*AllNumber > 0) ? 1 : -1);
+				*AllNumber += pow(10,-7) * ((*AllNumber > 0) ? 1 : -1);
 				double st = modf(*AllNumber, &st);
 				st =((int)(st * pow(10, AfCom))) % 10;
 				st = st * pow(10, -AfCom);
 				*AllNumber -=(st * ((*AllNumber > 0) ? 1:-1));
-				*AllNumber -= pow(10, -8) * ((*AllNumber > 0) ? 1 : -1);
+				*AllNumber -= pow(10, -7) * ((*AllNumber > 0) ? 1 : -1);
 			}
 		}
 		
