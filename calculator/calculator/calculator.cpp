@@ -135,117 +135,81 @@ void close()
 	IMG_Quit();
 	SDL_Quit();
 }
-int SymbolsBeforePoint(double number)
+int HavePoint(char* AllNumber)
 {
-	number = abs(number);
-	//counts the symbols before comma
-	int i = 0;
-	int N = (int)(number);
-	while (N)
-	{
-		N /= 10;
-		i++;
-	}
-	return i;
+	for (int i = 0; i < strlen(AllNumber); i++)
+		if (AllNumber[i] == '.')
+			return i;
+	return 0;
 }
-int SymbolsAfterPoint(double number)
+void NumberCpy(char* AllNumber, double number)
 {
-	number = abs(number);
-	int BefPoint = SymbolsBeforePoint(number);
-	//counts the symbols after comma
-	number += pow(10,-(maxCh - BefPoint+2));
-	int col = 0;
-	for (int i = 1; i <= maxCh - maxBef; i++)
+	sprintf_s(AllNumber, 40 * sizeof(char), "%lf", number);
+	for (int i = strlen(AllNumber) - 1; i >= 0; i--)
 	{
-		number -= (int)(number);
-		number *= 10;
-		if (((int)number % 10) != 0)
-			col = i;
+		if (AllNumber[i] == '0')
+		{
+			AllNumber[i] = '\0';
+		}
+		else if (AllNumber[i] == '.')
+		{
+			AllNumber[i] = '\0';
+			break;
+		}
+		else
+		{
+			break;
+		}
 	}
-	return col;
+	while (strlen(AllNumber) > maxCh)
+	{
+		AllNumber[strlen(AllNumber) - 1] = '\0';
+	}
 }
-
-void UpdateDisplay(double AllNumber, int point,int col0, SDL_Texture** numbers)
+void UpdateDisplay(char* AllNumber, SDL_Texture** numbers)
 {
 	//variable calculation
 	int nullposx = (int)(SCREEN_WIDTH * 0.83);
 	int nullposy = (int)(SCREEN_HEIGHT * 0.105);
 	int numbsizex = (int)(SCREEN_WIDTH * 0.05);
 	int numbsizey = (int)(numbsizex * 3 / 2);
-	int afcom = SymbolsAfterPoint(AllNumber);
-	int befcom = SymbolsBeforePoint(AllNumber);
-	int colvivod = 0;
-
-   
-	double Allnumb = modf(AllNumber, &Allnumb);
-	double pogr = (pow(10, -7) * ((AllNumber >= 0) ? 1 : -1));
-	Allnumb += pogr;
+	int poi = 0;
 	//Clean display
 	for (int i = 0; i < maxCh + 1; i++)
 	{
 		loadFromFile(nullposx - (i * numbsizex), nullposy, numbers[11], numbsizex, numbsizey);
 	}
-	//output on display 0
-	for (int i = 0; i < col0; i++)
+	//output on display
+	int len = strlen(AllNumber);
+	for (int i =  len - 1; i >= 0; i--)
 	{
-		loadFromFile(nullposx - (colvivod * numbsizex), nullposy, numbers[0], numbsizex, numbsizey);
-		colvivod++;
-	}
-	//output on display symbols after point
-	if (afcom >= maxCh - maxBef-col0)
-		afcom = maxCh - maxBef-col0;
-	for (; afcom > 0; afcom--)
-	{
-		int numb = ((int)(Allnumb * pow(10, afcom))) % 10;
-		numb = abs(numb);
-		loadFromFile(nullposx - (colvivod * numbsizex), nullposy, numbers[numb], numbsizex, numbsizey);
-		colvivod++;
-	}
-
-	//output on display point
-	if(point)
-		loadFromFile(nullposx - (colvivod * numbsizex)+ (numbsizex / 2), nullposy, numbers[10], numbsizex/2, numbsizey);
-	//output on display symbols before point
-	if (befcom != 0)
-	{
-		int allnum = floor(abs(AllNumber));
-		while(allnum)
+		if (AllNumber[i] == '.')
 		{
-			int numb = allnum % 10;
-			numb = abs(numb);
-			loadFromFile(nullposx - (colvivod * numbsizex)-((numbsizex / 2)*point), nullposy, numbers[numb], numbsizex, numbsizey);
-			allnum /= 10;
-			colvivod++;
-			if (colvivod == maxCh)
-				break;
+			loadFromFile(nullposx - ((len -1- i) * numbsizex) + (numbsizex / 2), nullposy, numbers[10], numbsizex / 2, numbsizey);
+			poi = 1;
 		}
+		else if (AllNumber[i] == '-')
+		{
+			loadFromFile(nullposx - ((len - 1 - i) * numbsizex) + ((numbsizex / 2) * poi) + (numbsizex / 2), nullposy, numbers[12], numbsizex / 2, numbsizey);
+		}
+		else
+		{
+			loadFromFile(nullposx - ((len - 1 - i) * numbsizex) + ((numbsizex / 2) * poi), nullposy, numbers[AllNumber[i]-'0'], numbsizex, numbsizey);
+		}
+		SDL_RenderPresent(gRenderer);
 	}
-	else
-	{
-		loadFromFile(nullposx - (colvivod * numbsizex) - ((numbsizex / 2) * point), nullposy, numbers[0], numbsizex, numbsizey);
-		colvivod++;
-	}
-	if (AllNumber < 0)
-	{
-		loadFromFile(nullposx - (colvivod * numbsizex) - ((numbsizex / 2) * point)+ (numbsizex / 2), nullposy, numbers[12], numbsizex/2, numbsizey);
-	}
+	
 
 	SDL_RenderPresent(gRenderer);
 }
-void ClickToNumber(int input, double* AllNumber)
+void ClickToNumber(int input, char* AllNumber)
 {
 	if (input < -2 || input>12)
 		return;
-	static int point;
-	static int col0;
 	static SDL_Texture* numbers[13];
-	int AfCom = SymbolsAfterPoint(*AllNumber);
-	int BefCom = SymbolsBeforePoint(*AllNumber);
 	//update variables
 	if (input == -1)
 	{
-		point = 0;
-		col0 = 0;
 		numbers[0] = loadTexture("null.jpg");
 		numbers[1] = loadTexture("one.jpg");
 		numbers[2] = loadTexture("two.jpg"); 
@@ -260,112 +224,79 @@ void ClickToNumber(int input, double* AllNumber)
 		numbers[11] = loadTexture("empty.jpg");
 		numbers[12] = loadTexture("minus.jpg");
 	}
-	//update variables to number
-	else if (input == -2)
+	else if(input == -2)
 	{
-		if (AfCom > 0)
-			point = 1;
-		else
-			point = 0;
-			
-		col0 = 0;
+
 	}
+	//update variables to number
 	//input swap sign
 	else if (input == 12)
 	{ 
-		*AllNumber *= -1;
+		double num = atof(AllNumber);
+		num *= -1;
+		NumberCpy(AllNumber, num);
+
 	}
 	//input Backspace
 	else if (input == 11)
 	{
-		if (AfCom == 0)
-		{
-			if (point)
-				point = 0;
-			else
-			*AllNumber = (*AllNumber - (((int)(*AllNumber))% 10)) / 10;
-		}
-		else
-		{
-			if (col0 > 0)
-				col0--;
-			else
-			{
-				*AllNumber += pow(10,-7) * ((*AllNumber > 0) ? 1 : -1);
-				double st = modf(*AllNumber, &st);
-				st =((int)(st * pow(10, AfCom))) % 10;
-				st = st * pow(10, -AfCom);
-				*AllNumber -=(st * ((*AllNumber > 0) ? 1:-1));
-				*AllNumber -= pow(10, -7) * ((*AllNumber > 0) ? 1 : -1);
-			}
-		}
-		
+		if(strlen(AllNumber)>0)
+		AllNumber[strlen(AllNumber) - 1] = '\0';
 	}
 	//input comma
 	else if(input == 10)
 	{
-		if(AfCom == 0)
-		point = !point;
-		else
+		if (!HavePoint(AllNumber))
 		{
-			return;
+			AllNumber[strlen(AllNumber) + 1] = '\0';
+			AllNumber[strlen(AllNumber)] = '.';
 		}
 	}
 	//input number
 	else 
 	{
-		if (AfCom + BefCom+col0 >= maxCh)
+		if (strlen(AllNumber) < maxCh)
 		{
-		}
-		else if (point == 0)
-		{
-			if (BefCom < 9)
-			*AllNumber = *AllNumber * 10 + ((*AllNumber>=0)?input:-input);
-			
-		}
-		else
-		{
-			if (AfCom + col0 >= maxCh - maxBef)
-			{
-
-			}
-			else if (input == 0)
-				col0++;
-			else
-			{
-				*AllNumber = *AllNumber + (((*AllNumber >= 0) ? input : -input) * pow(10, -AfCom -col0 - 1));
-				col0 = 0;
-			}
+			AllNumber[strlen(AllNumber) + 1] = '\0';
+			AllNumber[strlen(AllNumber)] = '0' + input;
 		}
 	}   
-	UpdateDisplay(*AllNumber, point,col0, numbers);
+	UpdateDisplay(AllNumber, numbers);
 }
 
-void DoOperation(int input, double* AllNumber, double* MemNumber,int* sign)
+void DoOperation(int input, char* AllNumber, double* MemNumber,int* sign)
 {
 	if (input < -2 || input>18)
 		return;
-
+	double num = atof(AllNumber);
 	if (input == 11)
 	{
-		if (*sign == 12)
+		
+		if ((*MemNumber) == DBL_MIN)
 		{
-			*AllNumber = (*MemNumber) + (*AllNumber);
+
 		}
-		else if (*sign == 13)
-		{
-			*AllNumber = (*MemNumber) - (*AllNumber);
+		else{
+			if (*sign == 12)
+			{
+				num = (*MemNumber) + (num);
+			}
+			else if (*sign == 13)
+			{
+				num = (*MemNumber) - (num);
+			}
+			else if (*sign == 14)
+			{
+				num = (*MemNumber) * (num);
+			}
+			else if (*sign == 16)
+			{
+				num = (*MemNumber) / (num);
+			}
+			*MemNumber = DBL_MIN;
+			NumberCpy(AllNumber, num);
+			ClickToNumber(-2, AllNumber);
 		}
-		else if (*sign == 14)
-		{
-			*AllNumber = (*MemNumber) * (*AllNumber);
-		}
-		else if (*sign == 16)
-		{
-			*AllNumber = (*MemNumber) / (*AllNumber);
-		}
-		*MemNumber = DBL_MIN;
-		ClickToNumber(-2, AllNumber);
 		return;
 	}
 
@@ -373,21 +304,20 @@ void DoOperation(int input, double* AllNumber, double* MemNumber,int* sign)
 		return;
 	if (input == 18)
 	{
-		if (*AllNumber < 0)
+		if (num < 0)
 			return;
 		*sign = 0;
-		*AllNumber = sqrt(*AllNumber);
+		num = sqrt(num);
+		NumberCpy(AllNumber, num);
 		ClickToNumber(-2, AllNumber);
 		return;
 	}
-	*MemNumber = *AllNumber;
-	*AllNumber = 0;
-	ClickToNumber(-1, AllNumber);
+	*MemNumber = num;
+	strcpy_s(AllNumber,40*sizeof(char), "");
+	ClickToNumber(-2, AllNumber);
 	*sign = input;
-
-
 }
-void ClickToButton(int input, double* AllNumber, double* MemNumber,int* sign)
+void ClickToButton(int input, char* AllNumber, double* MemNumber,int* sign)
 {
 	if (input < -2 || input > 18) {
 		return;
@@ -459,7 +389,8 @@ int main(int argc, char* args[])
 		//Event handler
 		SDL_Event events;
 
-		double AllNumber = 0;
+		char AllNumber[40];
+		strcpy_s(AllNumber, 40 * sizeof(char), "");
 		double memNumber = DBL_MIN;
 		int sign = 0;
 		
@@ -492,7 +423,7 @@ int main(int argc, char* args[])
 
 		//create workspace of application
 		createWorkspace(background, arrayOfNumAndOper);
-		ClickToButton(-1, &AllNumber, &memNumber, &sign);
+		ClickToButton(-1, AllNumber, &memNumber, &sign);
 	//While application is running
 		while (!quit) {
 			
@@ -503,7 +434,7 @@ int main(int argc, char* args[])
 					quit = 1;
 				}
 				if (events.type == SDL_MOUSEBUTTONDOWN) {
-					ClickToButton(checkMouseLocation(arrayOfNumAndOper), &AllNumber, &memNumber, &sign);
+					ClickToButton(checkMouseLocation(arrayOfNumAndOper), AllNumber, &memNumber, &sign);
 				}
 			}
 		}
