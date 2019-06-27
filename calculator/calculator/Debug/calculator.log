@@ -1,5 +1,1 @@
-﻿  calculator.cpp
-C:\GitTest\calculator\calculator\calculator\BUTTON.h(18): warning C4091: typedef : пропускается слева от "button", когда ни одна переменная не объявлена
-C:\GitTest\calculator\calculator\calculator\calculator.cpp(140): warning C4018: <: несоответствие типов со знаком и без знака
-C:\GitTest\calculator\calculator\calculator\calculator.cpp(372): warning C4715: checkMouseLocation: значение возвращается не при всех путях выполнения
-  calculator.vcxproj -> C:\GitTest\calculator\calculator\Debug\calculator.exe
+﻿  calculator.vcxproj -> D:\git\calculator\calculator\Debug\calculator.exe
